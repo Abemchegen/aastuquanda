@@ -69,7 +69,10 @@ export default function Register() {
         navigate("/login");
       }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || err.message || "Registration failed. Please try again.";
+      const errorMessage =
+        err.response?.data?.error ||
+        err.message ||
+        "Registration failed. Please try again.";
       setError(errorMessage);
     } finally {
       setIsLoading(false);

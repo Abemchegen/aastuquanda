@@ -12,35 +12,28 @@ services:
           name: campus-qna-db
           property: connectionString
       - key: JWT_SECRET
-        value: change-me-in-render
       - key: CLOUDINARY_CLOUD_NAME
-        value: your_cloud_name
       - key: CLOUDINARY_API_KEY
-        value: your_api_key
       - key: CLOUDINARY_API_SECRET
-        value: your_api_secret
       - key: CLOUDINARY_UPLOAD_FOLDER
-        value: campusloop
       - key: SMTP_HOST
-        value: smtp.gmail.com
       - key: SMTP_PORT
-        value: "587"
       - key: SMTP_USER
-        value: youremail@gmail.com
       - key: SMTP_PASS
-        value: your-app-password
       - key: SMTP_FROM
-        value: "Quanda <youremail@gmail.com>"
 
-staticSites:
-  - name: campus-qna-frontend
+  - type: web
+    name: campus-qna-frontend
+    runtime: node
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
+    autoDeploy: true
     envVars:
       - key: VITE_BACKEND_URL
         fromService:
           name: campus-qna-backend
+          type: web
           property: url
 
 databases:

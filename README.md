@@ -1,98 +1,111 @@
 # AASTU Q&A
 
-AASTU Q&A is a full-stack web app for an anonymous, campus-oriented Q&A/community feed.
+AASTU Q&A is a full-stack, anonymous, campus-oriented Q&A/community feed for spaces, posts, and discussions.
 
-- Frontend: Vite + React + TypeScript + shadcn-ui + Tailwind
-- Backend: Node.js + Express + Prisma + PostgreSQL
+**Tech stack**: Vite + React + TypeScript + shadcn-ui + Tailwind (frontend) / Node.js + Express + Prisma + PostgreSQL (backend)
 
 ## Features
 
-- Auth with email verification
+- Email-based auth with verification
 - Spaces (communities) with membership
-- Posts with Markdown content (and images)
+- Posts with Markdown + images
 - Comments with replies
 - Voting and saved posts
 - Public profiles (read-only view)
 - Notifications
 
-## Repo structure
+## Repository layout
 
-- `frontend/` — React client
-- `backend/` — Express API server
+- `frontend/` — Vite/React client
+- `backend/` — Express/Prisma API server
 
-## Local development
-
-### Prerequisites
+## Prerequisites
 
 - Node.js 20+
-- PostgreSQL
+- PostgreSQL 13+ running locally or reachable via `DATABASE_URL`
 
-### Backend
+## Quick start (local)
 
 ```sh
+# Backend
 cd backend
 npm install
-
-# create and fill backend/.env (DATABASE_URL, JWT secret, email, cloudinary, etc.)
-# then:
+cp .env.example .env   # or create backend/.env manually
 npm run prisma:generate
-npm run prisma:migrate
-npm run dev
-```
+npm run prisma:migrate  # applies migrations
+npm run dev             # starts API at http://localhost:4000/api
 
-Backend runs on `http://localhost:4000/api` by default.
-
-### Frontend
-
-```sh
-cd frontend
+# Frontend (new terminal)
+cd ../frontend
 npm install
-
-# set VITE_API_BASE if your backend is not localhost
-npm run dev
+echo VITE_API_BASE=http://localhost:4000/api > .env  # optional if not default
+npm run dev             # starts Vite dev server (see console for URL)
 ```
 
-Frontend runs on the Vite dev server (see console output).
-
-## Configuration
-
-Common environment variables:
+## Environment variables
 
 Backend (`backend/.env`):
 
-- `DATABASE_URL` (PostgreSQL connection string)
-- `JWT_SECRET` (or equivalent, depending on your setup)
-- Email/SMTP variables (for verification emails)
-- Cloudinary variables (optional, for image uploads)
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/aastu_qanda?schema=public
+JWT_SECRET=change-me
+
+# Email (for verification)
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your_user
+SMTP_PASS=your_pass
+
+# Cloudinary (optional for images)
+CLOUDINARY_CLOUD_NAME=your_cloud
+CLOUDINARY_API_KEY=your_key
+CLOUDINARY_API_SECRET=your_secret
+CLOUDINARY_UPLOAD_FOLDER=campusloop
+```
 
 Frontend (`frontend/.env`):
 
-- `VITE_API_BASE` (defaults to `http://localhost:4000/api`)
+```env
+VITE_API_BASE=http://localhost:4000/api
+```
 
-## Scripts
+## Database and Prisma
+
+- Generate client: `npm run prisma:generate` (in backend)
+- Apply migrations locally: `npm run prisma:migrate`
+- Deploy migrations in prod: `npm run prisma:deploy`
+
+## Scripts reference
 
 Backend:
-
-- `npm run dev` — start API in watch mode
+- `npm run dev` — start API with reload
 - `npm run start` — start API
 - `npm run prisma:generate` — generate Prisma client
+- `npm run prisma:migrate` — run local migrations
 - `npm run prisma:deploy` — apply migrations in production
 
 Frontend:
-
 - `npm run dev` — start dev server
 - `npm run build` — production build
-- `npm run preview` — preview build
+- `npm run preview` — serve built assets locally
 
-## Security notes
+## Security and production checklist
 
-This repository is intended as a project starter. Before production use, review:
+- Use strong `JWT_SECRET` and rotate if compromised
+- Ensure password hashing and rate limiting are enabled
+- Validate and sanitize inputs server-side
+- Store secrets securely (env vars, not in VCS)
+- Configure CORS, HTTPS, and logging for production
 
-- password storage (hashing)
-- rate limiting
-- input validation
-- secrets management
+## Contributing and community
 
-## License
+- Contribution guidelines: see [CONTRIBUTING.md](CONTRIBUTING.md)
+- Behavior expectations: see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- License: [LICENSE.md](LICENSE.md) (MIT)
 
-MIT — see [LICENSE.md](LICENSE.md).
+## Roadmap (short-term)
+
+- Add project logo/branding across frontend
+- Publish “good first issues” and contribution walkthrough
+- Improve docs with screenshots and API examples
+- Harden security (rate limiting, stricter validation)

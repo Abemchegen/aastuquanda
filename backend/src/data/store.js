@@ -658,5 +658,4 @@ module.exports = {
   createVerificationToken,
   verifyEmailByToken,
   reissueVerificationToken,
-  deleteUserAccount,
 };

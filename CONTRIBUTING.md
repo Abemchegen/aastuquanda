@@ -50,7 +50,7 @@ npm run lint
 ## Reporting security issues
 
 Please do not open public issues for security vulnerabilities.
-Instead, email the maintainers at: [ADD_SECURITY_CONTACT_EMAIL]
+Instead, email the maintainers at: abem.chegen@gmail.com
 
 ## Pull request checklist
 

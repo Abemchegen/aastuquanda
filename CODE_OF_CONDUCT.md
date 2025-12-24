@@ -29,7 +29,7 @@ Maintainers may remove content, lock threads, or restrict participation when nee
 
 If you experience or witness unacceptable behavior:
 
-- Contact the maintainers privately at: [ADD_CONDUCT_CONTACT_EMAIL]
+- Contact the maintainers privately at: abem.chegen@gmail.com
 - If there is an immediate safety risk, contact local emergency services.
 
 ## Attribution

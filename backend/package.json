@@ -10,7 +10,8 @@
     "dev": "nodemon src/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:deploy": "npx prisma migrate deploy"
+    "prisma:deploy": "npx prisma migrate deploy",
+    "db:wipe": "node scripts/wipe-db.js"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",

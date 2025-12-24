@@ -619,7 +619,7 @@ export default function PostDetail() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                       <span>
                         Posted by{" "}
@@ -646,15 +646,19 @@ export default function PostDetail() {
                       </span>
                     </div>
 
-                    <h1 className="font-display text-2xl font-bold mb-4">
+                    <h1 className="font-display text-2xl font-bold mb-4 [overflow-wrap:anywhere]">
                       {post.title}
                     </h1>
                     {isPostDeleted() ? (
-                      <p className={cn("text-muted-foreground italic mb-4")}>
+                      <p
+                        className={cn(
+                          "text-muted-foreground italic mb-4 break-words whitespace-pre-wrap"
+                        )}
+                      >
                         {post.content}
                       </p>
                     ) : (
-                      <div className="prose prose-sm max-w-none text-foreground mb-4 break-words">
+                      <div className="prose prose-sm max-w-none text-foreground mb-4 break-words min-w-0">
                         <ReactMarkdown skipHtml>
                           {post.content || ""}
                         </ReactMarkdown>

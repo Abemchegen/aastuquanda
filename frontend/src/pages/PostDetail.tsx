@@ -120,7 +120,7 @@ function CommentCard({
         </div>
         <p
           className={cn(
-            "text-foreground mb-3",
+            "text-foreground mb-3 break-words whitespace-pre-wrap",
             isDeleted && "text-muted-foreground italic"
           )}
         >
@@ -654,7 +654,7 @@ export default function PostDetail() {
                         {post.content}
                       </p>
                     ) : (
-                      <div className="prose prose-sm max-w-none text-foreground mb-4">
+                      <div className="prose prose-sm max-w-none text-foreground mb-4 break-words">
                         <ReactMarkdown skipHtml>
                           {post.content || ""}
                         </ReactMarkdown>

@@ -144,6 +144,25 @@
   h6 {
     @apply font-display font-semibold tracking-tight;
   }
+
+  /* Mobile-safe Markdown rendering */
+  .prose {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .prose pre {
+    overflow-x: auto;
+  }
+
+  .prose code {
+    overflow-wrap: anywhere;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @layer utilities {

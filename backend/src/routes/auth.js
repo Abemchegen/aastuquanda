@@ -1,4 +1,5 @@
 const express = require("express");
+const { prisma } = require("../db/prisma");
 const store = require("../data/store");
 const { issueAccessToken, requireAuth } = require("../middleware/auth");
 const { sendVerificationEmail } = require("../services/mailer");
@@ -184,33 +185,47 @@ router.delete("/account", requireAuth, async (req, res) => {
   const userId = req.user.id;
 
   try {
-    // Delete related records in order to avoid foreign key constraints
-    await prisma.savedPost.deleteMany({ where: { userId } });
-    await prisma.vote.deleteMany({ where: { userId } });
-    await prisma.comment.deleteMany({ where: { userId } });
-    await prisma.post.deleteMany({ where: { userId } });
-    await prisma.spaceMembership.deleteMany({ where: { userId } });
-    await prisma.notification.deleteMany({ where: { userId } });
-    await prisma.refreshToken.deleteMany({ where: { userId } });
-    await prisma.verificationToken.deleteMany({ where: { userId } });
+    console.log(`Starting account deletion for user ${userId}`);
 
     // Handle spaces created by the user
-    const createdSpaces = await prisma.space.findMany({ where: { createdBy: userId } });
+    const createdSpaces = await prisma.space.findMany({
+      where: { createdBy: userId },
+      include: { members: true },
+    });
+    console.log(`Found ${createdSpaces.length} spaces created by user`);
+
     for (const space of createdSpaces) {
-      // Delete all posts in the space
-      await prisma.post.deleteMany({ where: { spaceId: space.id } });
-      // Delete memberships
-      await prisma.spaceMembership.deleteMany({ where: { spaceId: space.id } });
-      // Delete the space
-      await prisma.space.delete({ where: { id: space.id } });
+      const otherMembers = space.members.filter((m) => m.userId !== userId);
+      if (otherMembers.length > 0) {
+        // Transfer ownership to first other member
+        await prisma.space.update({
+          where: { id: space.id },
+          data: { createdBy: otherMembers[0].userId },
+        });
+        console.log(
+          `Transferred ownership of space ${space.id} to ${otherMembers[0].userId}`
+        );
+      } else {
+        // No other members, delete the space
+        await prisma.space.delete({ where: { id: space.id } });
+        console.log(`Deleted space ${space.id} (no other members)`);
+      }
     }
 
-    // Finally, delete the user
+    // Delete the user - Prisma cascade will handle all related records
     await prisma.user.delete({ where: { id: userId } });
+    console.log(`Successfully deleted user ${userId}`);
+
     res.json({ message: "Account deleted successfully" });
   } catch (err) {
-    console.error("Failed to delete account", err);
-    res.status(500).json({ error: "Failed to delete account" });
+    console.error("Failed to delete account:", err);
+    res.status(500).json({
+      error: "Failed to delete account",
+      details:
+        process.env.NODE_ENV === "development"
+          ? err.message
+          : "Internal server error",
+    });
   }
 });
 

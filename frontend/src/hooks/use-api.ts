@@ -2,6 +2,7 @@
 // React hooks wrapping main API calls: spaces, posts, comments, profiles, notifications
 
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import {
   getSpaces,
   getSpaceById,
@@ -41,6 +42,7 @@ import {
 export const useAPI = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const call = async (fn: Function, ...args: any[]) => {
     try {
@@ -48,6 +50,11 @@ export const useAPI = () => {
       return await fn(...args);
     } catch (err: any) {
       setError(err.message);
+      toast({
+        title: "Error",
+        description: err.response?.data?.error || err.message || "Something went wrong",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

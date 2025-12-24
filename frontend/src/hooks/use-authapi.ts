@@ -2,6 +2,7 @@
 // React hooks wrapping authentication API calls
 
 import { useState, useCallback } from "react";
+import { useToast } from "@/hooks/use-toast";
 import {
   registerUser,
   loginUser,
@@ -15,6 +16,7 @@ import {
 export const useAuthAPI = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const register = async (data: {
     email: string;
@@ -27,6 +29,11 @@ export const useAuthAPI = () => {
       return res;
     } catch (err: any) {
       setError(err.message);
+      toast({
+        title: "Registration Failed",
+        description: err.response?.data?.error || err.message || "Please try again.",
+        variant: "destructive",
+      });
       throw err;
     } finally {
       setLoading(false);
@@ -40,6 +47,11 @@ export const useAuthAPI = () => {
       return res;
     } catch (err: any) {
       setError(err.message);
+      toast({
+        title: "Login Failed",
+        description: err.response?.data?.error || err.message || "Please try again.",
+        variant: "destructive",
+      });
       throw err;
     } finally {
       setLoading(false);
@@ -89,6 +101,11 @@ export const useAuthAPI = () => {
       return res;
     } catch (err: any) {
       setError(err.message);
+      toast({
+        title: "Resend Failed",
+        description: err.response?.data?.error || err.message || "Please try again.",
+        variant: "destructive",
+      });
       throw err;
     } finally {
       setLoading(false);

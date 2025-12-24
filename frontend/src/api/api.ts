@@ -107,7 +107,13 @@ export const getPosts = async () => {
 
 // Get posts with pagination and sorting
 export const getPostsPaged = async (
-  params: { page?: number; limit?: number; sort?: "hot" | "new" | "top"; spaceSlug?: string }
+  params: {
+    page?: number;
+    limit?: number;
+    sort?: "hot" | "new" | "top";
+    spaceSlug?: string;
+    joinedOnly?: boolean;
+  }
 ) => {
   const token =
     typeof window !== "undefined"

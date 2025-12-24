@@ -262,12 +262,28 @@ async function listPosts({
   limit = 10,
   sort = "new",
   spaceSlug,
+  joinedOnly,
   userId,
 }) {
   let where = {};
   if (spaceSlug) {
     const space = await prisma.space.findUnique({ where: { slug: spaceSlug } });
     where.spaceId = space ? space.id : "__none__"; // will yield empty if not found
+  }
+
+  if (joinedOnly && !where.spaceId) {
+    if (!userId) {
+      return { items: [], total: 0, page, limit };
+    }
+    const memberships = await prisma.spaceMembership.findMany({
+      where: { userId },
+      select: { spaceId: true },
+    });
+    const joinedSpaceIds = memberships.map((m) => m.spaceId);
+    if (joinedSpaceIds.length === 0) {
+      return { items: [], total: 0, page, limit };
+    }
+    where.spaceId = { in: joinedSpaceIds };
   }
   // Exclude posts that have been soft-deleted (placeholder content)
   where = {

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { SpaceLogo } from "@/components/SpaceLogo";
 import { PostCard } from "@/components/PostCard";
 import { FeedFilters } from "@/components/FeedFilters";
 import { useAPI } from "@/hooks/use-api";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -33,11 +35,17 @@ const Index = () => {
   // Initial load and reload on filter/sort changes
   useEffect(() => {
     (async () => {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("campusloop_access_token")
+          : null;
+      const joinedOnly = !selectedSpace && Boolean(token);
       const ps = await fetchPostsPaged({
         page: 1,
         limit,
         sort: sortBy,
         spaceSlug: selectedSpace ?? undefined,
+        joinedOnly,
       });
       if (ps?.items) {
         setPosts(ps.items);
@@ -62,11 +70,17 @@ const Index = () => {
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
           setIsFetchingMore(true);
           const nextPage = page + 1;
+          const token =
+            typeof window !== "undefined"
+              ? localStorage.getItem("campusloop_access_token")
+              : null;
+          const joinedOnly = !selectedSpace && Boolean(token);
           const ps = await fetchPostsPaged({
             page: nextPage,
             limit,
             sort: sortBy,
             spaceSlug: selectedSpace ?? undefined,
+            joinedOnly,
           });
           if (ps?.items) {
             setPosts((prev) => [...prev, ...ps.items]);
@@ -133,6 +147,10 @@ const Index = () => {
   });
 
   const currentSpace = spaces.find((s) => s.slug === selectedSpace);
+  const isHomeJoinedFeed =
+    !selectedSpace &&
+    typeof window !== "undefined" &&
+    Boolean(localStorage.getItem("campusloop_access_token"));
 
   return (
     <div className="min-h-screen bg-background">
@@ -207,37 +225,61 @@ const Index = () => {
 
             {/* Posts */}
             <div className="space-y-3">
-              {sortedPosts.map((post, index) => (
-                <div
-                  key={post.id}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                  className="animate-slide-up"
-                >
-                  <PostCard
-                    post={{
-                      ...post,
-                      createdAt: new Date(post.createdAt),
-                      spaceSlug: post.spaceSlug ?? post.space?.slug ?? "",
-                      commentCount:
-                        post.commentCount ?? post.commentsCount ?? 0,
-                      tags: post.tags ?? [],
-                    }}
-                  />
+              {sortedPosts.length === 0 ? (
+                <div className="text-center text-sm text-muted-foreground py-10">
+                  {isHomeJoinedFeed ? (
+                    <div className="space-y-3">
+                      <p>No posts from your joined spaces yet.</p>
+                      <div className="flex items-center justify-center gap-2">
+                        <Link to="/explore">
+                          <Button variant="outline">Explore spaces</Button>
+                        </Link>
+                        <Link to="/explore">
+                          <Button>Join a space</Button>
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <p>No posts yet.</p>
+                  )}
                 </div>
-              ))}
+              ) : (
+                sortedPosts.map((post, index) => (
+                  <div
+                    key={post.id}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                    className="animate-slide-up"
+                  >
+                    <PostCard
+                      post={{
+                        ...post,
+                        createdAt: new Date(post.createdAt),
+                        spaceSlug: post.spaceSlug ?? post.space?.slug ?? "",
+                        commentCount:
+                          post.commentCount ?? post.commentsCount ?? 0,
+                        tags: post.tags ?? [],
+                      }}
+                    />
+                  </div>
+                ))
+              )}
             </div>
 
             {/* Infinite scroll sentinel */}
-            <div id="feed-sentinel" className="h-8" />
-            {isFetchingMore && (
-              <div className="text-center text-sm text-muted-foreground py-2">
-                Loading more…
-              </div>
-            )}
-            {!hasMore && (
-              <div className="text-center text-sm text-muted-foreground py-2">
-                No more posts
-              </div>
+            {sortedPosts.length > 0 && (
+              <>
+                <div id="feed-sentinel" className="h-8" />
+                {isFetchingMore && (
+                  <div className="text-center text-sm text-muted-foreground py-2">
+                    Loading more…
+                  </div>
+                )}
+                {!hasMore && (
+                  <div className="text-center text-sm text-muted-foreground py-2">
+                    No more posts
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

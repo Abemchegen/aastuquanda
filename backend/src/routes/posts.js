@@ -11,12 +11,13 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // List + paged + filters
 router.get("/", maybeAuth, async (req, res) => {
-  const { page, limit, sort, spaceSlug, tag } = req.query;
+  const { page, limit, sort, spaceSlug, tag, joinedOnly } = req.query;
   const result = await store.listPosts({
     page: page ? parseInt(page, 10) : undefined,
     limit: limit ? parseInt(limit, 10) : undefined,
     sort: sort || "new",
     spaceSlug,
+    joinedOnly: joinedOnly === "true" || joinedOnly === "1",
     tag,
     userId: req.user?.id,
   });
@@ -174,12 +175,10 @@ router.post(
       const urls = uploads.map((u) => u.secure_url);
       return res.json({ ok: true, urls });
     } catch (err) {
-      return res
-        .status(500)
-        .json({
-          error: "images upload failed",
-          details: String((err && err.message) || err),
-        });
+      return res.status(500).json({
+        error: "images upload failed",
+        details: String((err && err.message) || err),
+      });
     }
   }
 );

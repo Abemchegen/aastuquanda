@@ -87,7 +87,7 @@ export const useAPI = () => {
 
     // Posts
     fetchPosts: () => call(getPosts),
-    fetchPostsPaged: (params: { page?: number; limit?: number; sort?: "hot" | "new" | "top"; spaceSlug?: string }) =>
+    fetchPostsPaged: (params: { page?: number; limit?: number; sort?: "hot" | "new" | "top"; spaceSlug?: string; joinedOnly?: boolean }) =>
       call(getPostsPaged, params),
     fetchPostById: (id: string) => call(getPostById, id),
     addPost: (

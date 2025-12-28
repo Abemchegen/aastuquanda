@@ -1,111 +1,106 @@
 # AASTU Q&A
 
-AASTU Q&A is a full-stack, anonymous, campus-oriented Q&A/community feed for spaces, posts, and discussions.
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Node](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-**Tech stack**: Vite + React + TypeScript + shadcn-ui + Tailwind (frontend) / Node.js + Express + Prisma + PostgreSQL (backend)
+> A full-stack, anonymous, campus-oriented Q&A and community feed for Addis Ababa Science and Technology University (AASTU).
 
-## Features
+**AASTU Q&A** is a platform designed to foster communication and knowledge sharing within the campus. It enables users to create spaces, post questions, share updates, and engage in discussions anonymously or publicly.
 
-- Email-based auth with verification
-- Spaces (communities) with membership
-- Posts with Markdown + images
-- Comments with replies
-- Voting and saved posts
-- Public profiles (read-only view)
-- Notifications
+---
 
-## Repository layout
+## 🚀 Features
 
-- `frontend/` — Vite/React client
-- `backend/` — Express/Prisma API server
+- **Anonymous & Verified Posting**: Share thoughts freely or as a verified student/staff.
+- **Spaces (Communities)**: Join and create focused groups for topics or departments.
+- **Rich Content**: Support for Markdown and image uploads in posts.
+- **Interactive**: Upvoting, downvoting, saving posts, and threaded comments.
+- **Profiles**: Public user profiles to showcase activity (read-only view).
+- **Notifications**: Stay updated with relevant interactions.
 
-## Prerequisites
+## 🛠️ Tech Stack
 
-- Node.js 20+
-- PostgreSQL 13+ running locally or reachable via `DATABASE_URL`
+**Frontend**
+- [Vite](https://vitejs.dev/) - Fast build tool
+- [React](https://reactjs.org/) - UI Library
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+- [shadcn/ui](https://ui.shadcn.com/) - Reusable components
 
-## Quick start (local)
+**Backend**
+- [Node.js](https://nodejs.org/) - Runtime environment
+- [Express](https://expressjs.com/) - Web framework
+- [Prisma](https://www.prisma.io/) - ORM
+- [PostgreSQL](https://www.postgresql.org/) - Database
 
-```sh
-# Backend
-cd backend
-npm install
-cp .env.example .env   # or create backend/.env manually
-npm run prisma:generate
-npm run prisma:migrate  # applies migrations
-npm run dev             # starts API at http://localhost:4000/api
+## 📂 Repository Structure
 
-# Frontend (new terminal)
-cd ../frontend
-npm install
-echo VITE_API_BASE=http://localhost:4000/api > .env  # optional if not default
-npm run dev             # starts Vite dev server (see console for URL)
-```
+This project is organized as a monorepo:
 
-## Environment variables
+- [`frontend/`](./frontend) - All React client code.
+- [`backend/`](./backend) - All Express server code.
 
-Backend (`backend/.env`):
+## 🏁 Getting Started
 
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+- **Node.js** (v20 or higher)
+- **PostgreSQL** (v13 or higher)
+- **Git**
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Abemchegen/aastuqanda.git
+   cd aastuqanda
+   ```
+
+2. **Backend Setup**
+   ```bash
+   cd backend
+   npm install
+   cp .env.example .env
+   # Update .env with your database credentials
+   npm run prisma:generate
+   npm run prisma:migrate
+   npm run dev
+   ```
+
+3. **Frontend Setup**
+   Open a new terminal:
+   ```bash
+   cd frontend
+   npm install
+   # The default API URL is http://localhost:4000/api
+   npm run dev
+   ```
+
+The frontend should now be running at default Vite port (usually `http://localhost:5173`).
+
+## ⚙️ Environment Variables
+
+Check `.env.example` in both `backend` and `frontend` directories for the required variables.
+
+**Backend (.env)**
 ```env
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/aastu_qanda?schema=public
-JWT_SECRET=change-me
-
-# Email (for verification)
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=your_user
-SMTP_PASS=your_pass
-
-# Cloudinary (optional for images)
-CLOUDINARY_CLOUD_NAME=your_cloud
-CLOUDINARY_API_KEY=your_key
-CLOUDINARY_API_SECRET=your_secret
-CLOUDINARY_UPLOAD_FOLDER=campusloop
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname?schema=public"
+JWT_SECRET="your-super-secret-key"
+# ... other vars
 ```
 
-Frontend (`frontend/.env`):
+## 🤝 Contributing
 
-```env
-VITE_API_BASE=http://localhost:4000/api
-```
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started, our code of conduct, and the PR process.
 
-## Database and Prisma
+## 📄 License
 
-- Generate client: `npm run prisma:generate` (in backend)
-- Apply migrations locally: `npm run prisma:migrate`
-- Deploy migrations in prod: `npm run prisma:deploy`
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
 
-## Scripts reference
-
-Backend:
-- `npm run dev` — start API with reload
-- `npm run start` — start API
-- `npm run prisma:generate` — generate Prisma client
-- `npm run prisma:migrate` — run local migrations
-- `npm run prisma:deploy` — apply migrations in production
-
-Frontend:
-- `npm run dev` — start dev server
-- `npm run build` — production build
-- `npm run preview` — serve built assets locally
-
-## Security and production checklist
-
-- Use strong `JWT_SECRET` and rotate if compromised
-- Ensure password hashing and rate limiting are enabled
-- Validate and sanitize inputs server-side
-- Store secrets securely (env vars, not in VCS)
-- Configure CORS, HTTPS, and logging for production
-
-## Contributing and community
-
-- Contribution guidelines: see [CONTRIBUTING.md](CONTRIBUTING.md)
-- Behavior expectations: see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-- License: [LICENSE.md](LICENSE.md) (MIT)
-
-## Roadmap (short-term)
-
-- Add project logo/branding across frontend
-- Publish “good first issues” and contribution walkthrough
-- Improve docs with screenshots and API examples
-- Harden security (rate limiting, stricter validation)
+---
+Built with ❤️ by the AASTU Q&A Team.

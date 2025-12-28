@@ -1,51 +1,36 @@
-# CampusLoop Frontend
+# AASTU Q&A - Frontend
 
-## Local development
+The frontend application for AASTU Q&A, built with React and Vite.
 
-The only requirement is having Node.js & npm installed.
+## 🛠 Tech Stack
 
-Run:
+- **Build Tool**: Vite
+- **Framework**: React
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🚀 Getting Started
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. **Environment Setup**
+   Create a `.env` file if needed (see `.env.example` if available, or use defaults):
+   ```env
+   VITE_API_BASE=http://localhost:4000/api
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
 
-**Edit a file directly in GitHub**
+## 📜 Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## Build
-
-```sh
-npm run build
-```
+- `npm run dev`: Start the dev server.
+- `npm run build`: Build for production.
+- `npm run preview`: Preview the production build locally.
+- `npm run lint`: Run ESLint.

@@ -27,10 +27,15 @@ Maintainers may remove content, lock threads, or restrict participation when nee
 
 ## Reporting
 
-If you experience or witness unacceptable behavior:
+If you experience or witness unacceptable behavior, please contact the maintainers privately at:
 
-- Contact the maintainers privately at: abem.chegen@gmail.com
-- If there is an immediate safety risk, contact local emergency services.
+- abenezer037005@gmail.com
+- abigailfh19@gmail.com
+- Abenezer.woldesenbet@gmail.com
+- andinetderejem@gmail.com
+- abenezer113@gmail.com
+
+If there is an immediate safety risk, contact local emergency services.
 
 ## Attribution
 

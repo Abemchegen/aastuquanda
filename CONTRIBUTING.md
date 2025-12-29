@@ -1,60 +1,67 @@
-# Contributing
+# Contributing to AASTU Q&A
 
-Thanks for your interest in contributing!
+First off, thank you for considering contributing to AASTU Q&A! It's people like you that make this community helpful and improving.
 
-## Ground rules
+## Code of Conduct
 
-- Be respectful and constructive.
-- Follow the Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+By participating in this project, you are expected to uphold our [Code of Conduct](CODE_OF_CONDUCT.md). Please report unacceptable behavior to the maintainers:
 
-## Getting started
+- abenezer037005@gmail.com
+- abigailfh19@gmail.com
+- Abenezer.woldesenbet@gmail.com
+- andinetderejem@gmail.com
+- abenezer113@gmail.com
 
-1. Fork the repo.
-2. Create a branch: `git checkout -b feature/short-description`
-3. Install dependencies:
+## How Can I Contribute?
 
-```sh
-cd backend && npm install
-cd ../frontend && npm install
-```
+### Reporting Bugs & Feature Requests
 
-4. Run locally:
+- **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/Abemchegen/aastuqanda/issues).
+- If you're unable to find an open issue addressing the problem, **open a new one**. Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
-```sh
-# backend
-cd backend
-npm run dev
+### Core Development
 
-# frontend (new terminal)
-cd frontend
-npm run dev
-```
+1. **Fork the repository** on GitHub.
+2. **Clone your fork** locally:
+   ```bash
+   git clone https://github.com/your-username/aastuqanda.git
+   cd aastuqanda
+   ```
+3. **Create a branch** for your feature or fix:
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+4. **Make your changes**.
+5. **Run Linting** to ensure code style:
+   ```bash
+   # In frontend directory
+   npm run lint
+   ```
+6. **Commit your changes**:
+   We recommend using [Conventional Commits](https://www.conventionalcommits.org/):
+   ```bash
+   git commit -m "feat: add amazing new feature"
+   ```
+7. **Push to the branch**:
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+8. **Open a Pull Request** against the `main` branch of the original repository.
 
-## Development workflow
+## Development Workflow
 
-- Keep PRs small and focused.
-- Prefer clear names and simple implementations.
-- Add/update documentation when behavior changes.
+- The project is split into `backend` and `frontend`.
+- You will need two terminal tabs running to work on the full stack.
 
-## Code style
+### Backend
+ Located in `backend/`. Run `npm run dev` to start the server.
 
-- Don’t reformat unrelated code.
-- Match existing patterns (components, hooks, API helpers).
-- Run lint before opening a PR:
+### Frontend
+ Located in `frontend/`. Run `npm run dev` to start the client.
 
-```sh
-cd frontend
-npm run lint
-```
+## Pull Request Guidelines
 
-## Reporting security issues
-
-Please do not open public issues for security vulnerabilities.
-Instead, email the maintainers at: abem.chegen@gmail.com
-
-## Pull request checklist
-
-- [ ] PR has a clear title and description
-- [ ] UI changes include screenshots (if applicable)
-- [ ] Lint passes (`frontend/npm run lint`)
-- [ ] Any new env vars are documented
+- **Keep it small**: Large PRs are hard to review. Break them up if possible.
+- **Describe your changes**: What does this PR do? Why is it needed?
+- **Screenshots**: If you changed the UI, please include screenshots or GIFs.
+- **Tests**: If you added functionality, please add relevant tests (if testing framework is set up) or describe how you manually verified it.

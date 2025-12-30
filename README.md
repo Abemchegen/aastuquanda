@@ -14,7 +14,7 @@
 
 ## 🚀 Features
 
-- **Anonymous & Verified Posting**: Share thoughts freely or as a verified student/staff.
+- **Anonymous and Verified Posting**: Share thoughts freely or as a verified student/staff.
 - **Spaces (Communities)**: Join and create focused groups for topics or departments.
 - **Rich Content**: Support for Markdown and image uploads in posts.
 - **Interactive**: Upvoting, downvoting, saving posts, and threaded comments.
